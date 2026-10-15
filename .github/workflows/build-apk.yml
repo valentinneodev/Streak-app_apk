@@ -1,0 +1,66 @@
+name: APK bauen
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Code holen
+        uses: actions/checkout@v4
+
+      - name: Java 21 einrichten
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - name: Node einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Abhaengigkeiten installieren
+        run: npm install --no-audit --no-fund
+
+      - name: Web-App ins Projekt kopieren
+        run: |
+          mkdir -p www
+          cp index.html www/index.html
+
+      - name: Android-Projekt erzeugen
+        run: npx cap add android
+
+      - name: App-Symbole erzeugen
+        run: |
+          pip install pillow
+          python make_icons.py
+
+      - name: Web-App mit Android synchronisieren
+        run: npx cap sync android
+
+      - name: Feste Signatur verwenden
+        run: |
+          mkdir -p ~/.android
+          cp debug.keystore ~/.android/debug.keystore
+
+      - name: Android-SDK vorbereiten
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true
+          "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0" > /dev/null || true
+
+      - name: APK bauen
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --no-daemon
+
+      - name: APK hochladen
+        uses: actions/upload-artifact@v4
+        with:
+          name: Streaks-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
