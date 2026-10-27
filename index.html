@@ -179,12 +179,21 @@ body[data-card="k-thick"] .card{border:2px solid var(--ac)}
 .gdot.now{border-color:var(--ac);color:var(--tx);font-weight:700}
 .hm{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:1fr;gap:3px;margin:10px 0 4px}
 .hm i{aspect-ratio:1;border-radius:3px;background:var(--ln);display:block}
+.gtile{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.gt{width:56px;height:60px;border-radius:14px;background:var(--bg);border:2px solid var(--ln);display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px;color:var(--tx);padding:0;line-height:1.1}
+.gt small{font-size:10px;color:var(--mu);height:12px}
+.gt.on{border-color:var(--ac)}
+.gt.sel{box-shadow:0 0 0 2px var(--tx)}
+.gt.lock{opacity:.6}
+#tutshade{position:fixed;border-radius:12px;box-shadow:0 0 0 9999px rgba(0,0,0,.62);z-index:90;pointer-events:none;transition:all .25s}
+#tutcard{position:fixed;left:8px;right:8px;z-index:95;background:var(--card);color:var(--tx);border:1px solid var(--ln);border-radius:16px;padding:12px 14px;box-shadow:0 6px 24px rgba(0,0,0,.35);max-width:520px;margin:0 auto}
 .empty{text-align:center;color:var(--mu);padding:30px 0}
 </style>
 </head>
 <body>
 <main>
-<div class="brand"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9a2e"/><stop offset="1" stop-color="#ff4d1a"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lg)"/><path d="M32 9c2 9 13 14 13 28a13 13 0 0 1-26 0c0-6 3-10 6-13 1 4 3 6 5 6-1-8 0-15 2-21z" fill="#fff"/><path d="M32 31c1 4 6 7 6 12a6 6 0 0 1-12 0c0-3 2-5 3-7 1 2 2 3 3 3z" fill="#ffc83d"/></svg><h1 id="ttl">Streaks</h1><div class="pts"><span id="pt">⭐ 0</span><button class="sw2" id="acb">🏅</button><button class="sw2" id="stb">📊</button><button class="sw2" id="invb">🎒</button><button class="sw2" id="shopb">🛍️</button></div></div>
+<div class="brand"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ff9a2e"/><stop offset="1" stop-color="#ff4d1a"/></linearGradient></defs><rect width="64" height="64" rx="16" fill="url(#lg)"/><path d="M32 9c2 9 13 14 13 28a13 13 0 0 1-26 0c0-6 3-10 6-13 1 4 3 6 5 6-1-8 0-15 2-21z" fill="#fff"/><path d="M32 31c1 4 6 7 6 12a6 6 0 0 1-12 0c0-3 2-5 3-7 1 2 2 3 3 3z" fill="#ffc83d"/></svg><h1 id="ttl">Streaks</h1><div class="pts"><span id="pt">⭐ 0</span><button class="sw2" id="setb">⚙️</button><button class="sw2" id="acb">🏅</button><button class="sw2" id="stb">📊</button><button class="sw2" id="invb">🎒</button><button class="sw2" id="shopb">🛍️</button></div></div>
+<h2 id="vt" style="margin:6px 0 2px;font-size:calc(20px*var(--fs,1))">📋 Meine Gewohnheiten</h2>
 <p class="sub" id="sub"></p>
 <div class="badge" id="bdg" hidden></div>
 <div class="prog"><i id="pg"></i></div>
@@ -193,6 +202,7 @@ body[data-card="k-thick"] .card{border:2px solid var(--ac)}
 <div id="inv" class="shop" hidden></div>
 <div id="stats" class="shop" hidden></div>
 <div id="ach" class="shop" hidden></div>
+<div id="set" class="shop" hidden></div>
 <div id="app"><div class="ban" id="ban"></div>
 <div class="card"><div class="rem">🔔 Tägliche Erinnerung um <input type="time" id="rt" value="20:00"><button class="sw" id="rsw">Aus</button></div>
 <p class="hint" id="rh">Die Benachrichtigung kommt nur, solange diese Seite im Browser geöffnet ist (auch im Hintergrund-Tab).</p></div>
@@ -227,6 +237,16 @@ body[data-card="k-thick"] .card{border:2px solid var(--ac)}
 <button class="btn" id="dsv" style="padding:10px 16px;border-radius:10px">Speichern</button>
 <button class="sw2" id="drm">Entfernen</button>
 <button class="sw2" id="dcl">Abbrechen</button></div>
+</div></div>
+<div class="ov" id="dl" hidden><div class="ovc">
+<b style="font-size:18px">🗑️ Streak löschen?</b>
+<p style="margin:10px 0 4px;font-weight:700;word-break:break-word" id="dln"></p>
+<p class="hint" id="dlw" style="margin:0 0 10px"></p>
+<p class="hint" style="margin:0 0 6px">Zur Bestätigung tippe das Wort <b>LÖSCHEN</b> ein:</p>
+<input id="dli" autocomplete="off" autocapitalize="characters" placeholder="LÖSCHEN" style="width:100%">
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+<button class="btn" id="dlb" disabled style="padding:10px 16px;border-radius:10px;background:#d9534f;opacity:.4">Endgültig löschen</button>
+<button class="sw2" id="dlc">Abbrechen</button></div>
 </div></div>
 <div class="ov" id="rg" hidden><div class="ovc">
 <b style="font-size:18px" id="rgt"></b>
@@ -334,15 +354,18 @@ function best(h){
   }return b;
 }
 function render(){
-  const t=iso(new Date()),el=document.getElementById("list");applyFreezes();updPts();checkAch();renderGift();
+  const t=iso(new Date()),el=document.getElementById("list");applyFreezes();updPts();checkAch();renderGift();scheduleNative();
   const vis=habits.filter(h=>!(shop.hc&&h.crit));
   const doneToday=vis.filter(h=>h.done.includes(t)).length;
   document.getElementById("sub").textContent=habits.length?doneToday+" von "+vis.length+" heute erledigt":"Starte deine erste Serie.";
   document.getElementById("pg").style.width=vis.length?Math.round(doneToday/vis.length*100)+"%":"0%";
   const hr=document.getElementById("hcrow");hr.innerHTML="";
 
-  if(!habits.length){el.innerHTML='<div class="empty">Noch keine Gewohnheiten. Tippe auf einen Vorschlag oder schreibe oben eine eigene:</div><div class="chips"></div>';
+  if(!habits.length){el.innerHTML='<div class="empty">Noch keine Gewohnheiten. Tippe auf einen Vorschlag oder lege in den Einstellungen ⚙️ einen eigenen Streak an:</div><div class="chips"></div>';
     ["📖 Lesen","🏃 Sport","💧 Wasser trinken","🧘 Meditieren","🛏️ Bett machen","✍️ Tagebuch"].forEach(n=>{const b=document.createElement("button");b.className="sw2";b.textContent=n;b.onclick=()=>{habits.push({name:n,done:[]});save();render()};el.querySelector(".chips").appendChild(b)});
+    const tw=document.createElement("div");tw.style.cssText="text-align:center;margin-top:18px";
+    tw.innerHTML='<button class="btn" style="padding:12px 20px;border-radius:12px">🎓 Tutorial starten</button><p class="hint" style="margin:6px 0 0">Neu hier? Eine kurze Tour zeigt dir alles Wichtige.</p>';
+    tw.querySelector("button").onclick=startTutorial;el.appendChild(tw);
     return}
   el.innerHTML="";
   let hiddenN=0;
@@ -383,13 +406,13 @@ function render(){
       if(on){h.done=h.done.filter(x=>x!==t);shop.earned-=h.aw[t]||0;delete h.aw[t]}
       else{h.done=[...h.done,t];const n=streak(h);const bonus=MS[n]||0;h.aw[t]=n+bonus;shop.earned+=n+bonus;boom();if(bonus)toast("🎉 "+n+"-Tage-Serie! +"+bonus+" ⭐ Bonus")}
       save();saveShop();render()};
-    c.querySelector(".del").onclick=()=>{const h0=habits.splice(i,1)[0];save();render();showUndo(h0,i)};
+    c.querySelector(".del").onclick=()=>askDelete(h);
     el.appendChild(c);
   });
 }
 function add(){
   const i=document.getElementById("in"),v=i.value.trim();
-  if(!v)return;habits.push({name:v,done:[]});i.value="";save();render();
+  if(!v)return;habits.push({name:v,done:[]});i.value="";save();render();flash("✓ „"+v+"“ hinzugefügt");
 }
 document.getElementById("addb").onclick=add;
 document.getElementById("in").addEventListener("keydown",e=>{if(e.key==="Enter")add()});
@@ -401,16 +424,49 @@ function remUI(){rsw.textContent=rem.on?"An":"Aus";rsw.classList.toggle("on",rem
 rsw.onclick=async()=>{
   if(!rem.on){
     try{
-      if(window.Notification&&Notification.permission==="default")await Notification.requestPermission();
-      if(!window.Notification||Notification.permission!=="granted")
-        rh.textContent="Browser-Benachrichtigungen sind nicht erlaubt – du siehst die Erinnerung stattdessen als Banner in der App.";
-    }catch(e){rh.textContent="Benachrichtigungen werden hier nicht unterstützt – Erinnerung erscheint als Banner."}
+      const ln=LN();
+      if(ln){
+        let pm=await ln.checkPermissions();
+        if(pm.display!=="granted")pm=await ln.requestPermissions();
+        if(pm.display!=="granted")rh.textContent="Benachrichtigungen sind für die App nicht erlaubt. Erlaube sie in den Android-Einstellungen unter Apps, Streaks, Benachrichtigungen.";
+      }else{
+        if(window.Notification&&Notification.permission==="default")await Notification.requestPermission();
+        if(!window.Notification||Notification.permission!=="granted")
+          rh.textContent="Browser-Benachrichtigungen sind nicht erlaubt – du siehst die Erinnerung stattdessen als Banner in der App.";
+      }
+    }catch(e){rh.textContent="Benachrichtigungen werden hier nicht unterstützt."}
   }
-  rem.on=!rem.on;saveRem();remUI();check();
+  rem.on=!rem.on;saveRem();remUI();check();scheduleNative();
 };
-rt.onchange=()=>{rem.time=rt.value||"20:00";rem.last="";saveRem()};
+rt.onchange=()=>{rem.time=rt.value||"20:00";rem.last="";saveRem();scheduleNative()};
+/* Native Android-Benachrichtigung (nur in der APK, sonst Browser-Variante) */
+const LN=()=>{try{return window.Capacitor&&Capacitor.isNativePlatform&&Capacitor.isNativePlatform()?Capacitor.Plugins.LocalNotifications||null:null}catch(e){return null}};
+const isNative=()=>!!LN();
+let nTimer=null;
+function scheduleNative(){
+  const ln=LN();if(!ln)return;
+  clearTimeout(nTimer);
+  nTimer=setTimeout(async()=>{
+    try{
+      if(shop.cc)return;
+      await ln.cancel({notifications:[{id:1}]});
+      if(!rem.on)return;
+      const now=new Date(),t=iso(now),hm=(rem.time||"20:00").split(":").map(Number);
+      const at=new Date(now.getFullYear(),now.getMonth(),now.getDate(),hm[0],hm[1],0);
+      const open=habits.filter(h=>!h.done.includes(t));
+      let body="Hake heute deine Gewohnheiten ab. 🔥";
+      if(at<=now||!open.length)at.setDate(at.getDate()+1);
+      else{
+        const op=open.filter(h=>!h.crit),nc=open.length-op.length;
+        body="Noch offen: "+(op.length?op.map(h=>h.name).slice(0,3).join(", ")+(op.length>3?" …":"")+(nc?" und "+nc+" weitere":""):nc+" Gewohnheit"+(nc>1?"en":""));
+      }
+      await ln.schedule({notifications:[{id:1,title:"Streak in Gefahr! 🔥",body,schedule:{at,allowWhileIdle:true}}]});
+    }catch(e){}
+  },600);
+}
+if(isNative())rh.textContent="Die Erinnerung kommt als Benachrichtigung, auch wenn die App geschlossen ist. Beim ersten Einschalten fragt Android nach der Erlaubnis.";
 function check(){
-  if(!rem.on)return;
+  if(!rem.on||isNative())return;
   const now=new Date(),t=iso(now);
   if(rem.last===t)return;
   const hm=String(now.getHours()).padStart(2,"0")+":"+String(now.getMinutes()).padStart(2,"0");
@@ -484,6 +540,7 @@ const ITEMS=[
 {id:"k-thick",t:"card",n:"Dicker Rahmen",p:35},
 {id:"k-glass",t:"card",n:"Glas-Karten",p:40},
 {id:"k-neon",t:"card",n:"Neon-Rand",p:60},
+{id:"tk-std",t:"tick",n:"Standard ✓ (immer dabei)",p:0,v:"",def:true},
 {id:"tk-fire",t:"tick",n:"Abhak-Symbol 🔥",p:20,v:"🔥"},
 {id:"tk-star",t:"tick",n:"Abhak-Symbol ⭐",p:20,v:"⭐"},
 {id:"tk-arm",t:"tick",n:"Abhak-Symbol 💪",p:25,v:"💪"},
@@ -579,6 +636,7 @@ if(shop.fx&&!shop.fxId)shop.fxId="fx";
 shop.tm=false;
 if(shop.own.includes("vib")){shop.own=shop.own.filter(x=>x!=="vib");shop.spent=Math.max(0,shop.spent-Math.min(20,shop.spent));shop.vib=false}
 var PV=null;
+var SEL={};
 const saveShop=()=>{try{localStorage.setItem("streaks-shop",JSON.stringify(PV?Object.assign({},shop,PV.snap):shop))}catch(e){storeFail()}};
 function ding(){try{const a=new(window.AudioContext||window.webkitAudioContext)(),o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.frequency.setValueAtTime(660,a.currentTime);o.frequency.setValueAtTime(880,a.currentTime+.12);g.gain.setValueAtTime(.15,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+.4);o.start();o.stop(a.currentTime+.4)}catch(e){}}
 function spawn(txt,cls,css){const e=document.createElement("span");e.className=cls;e.textContent=txt;for(const k in css){if(k.startsWith('--'))e.style.setProperty(k,css[k]);else e.style[k]=css[k]}document.body.appendChild(e);setTimeout(()=>e.remove(),2800)}
@@ -928,6 +986,20 @@ function moveHabit(i,dir){
   if(j<0||j>=habits.length)return;
   const t=habits[i];habits[i]=habits[j];habits[j]=t;save();render();
 }
+function askDelete(h){
+  const ov=document.getElementById("dl"),inp=document.getElementById("dli"),btn=document.getElementById("dlb");
+  document.getElementById("dln").textContent=h.name;
+  document.getElementById("dlw").textContent="Damit gehen "+h.done.length+" erledigte Tage und die aktuelle Serie von "+streak(h)+" Tagen verloren.";
+  inp.value="";btn.disabled=true;btn.style.opacity=".4";ov.hidden=false;
+  inp.oninput=()=>{const m=inp.value.trim().toLowerCase()==="löschen";btn.disabled=!m;btn.style.opacity=m?"1":".4"};
+  btn.onclick=()=>{
+    if(btn.disabled)return;
+    const i=habits.indexOf(h);ov.hidden=true;if(i<0)return;
+    habits.splice(i,1);save();render();showUndo(h,i);
+  };
+  document.getElementById("dlc").onclick=()=>{ov.hidden=true};
+  ov.onclick=e=>{if(e.target===ov)ov.hidden=true};
+}
 let undoT=null;
 function showUndo(h,i){
   const old=document.getElementById("undobar");if(old)old.remove();clearTimeout(undoT);
@@ -1037,23 +1109,6 @@ function renderShop(inv){
     vc.querySelector(".tabs").appendChild(bt);
   });
   el.appendChild(vc);
-  if(!inv&&(shop.tm||shop.cc)){
-    const cc=document.createElement("div");cc.className="card";
-    cc.innerHTML='<b>🧪 Testmodus'+(shop.cc?' aktiv':'')+'</b><p class="hint">'+(shop.cc?'Du hast unendlich ⭐ und alles kostet nichts. Beim Deaktivieren bekommst du deine normale Punktzahl zurück, und die im Testmodus geholten Items verschwinden wieder.':'Unendlich ⭐ zum Ausprobieren. Beim Ausschalten verschwinden die Items, die du im Testmodus geholt hast.')+'</p>'+(shop.cc?'<button class="sw2" id="ccb">Deaktivieren</button>':'<button class="sw2" id="ccb">Aktivieren</button>');
-    el.appendChild(cc);
-    cc.querySelector("#ccb").onclick=()=>{
-      if(shop.cc){
-        (shop.testOwn||[]).forEach(id=>{shop.own=shop.own.filter(x=>x!==id);unequip(id)});shop.testOwn=[];
-        shop.freezes=Math.max(0,(shop.freezes||0)-(shop.testFz||0));shop.testFz=0;
-        leaveDemo();shop.cc=false;save();applyShop();render();
-        flash("Testmodus aus. Deine echten Gewohnheiten sind wieder da.");
-      }else{
-        shop.cc=true;enterDemo();render();
-        flash("🧪 Testmodus: Vorzeige-Gewohnheiten geladen. Deine echten sind gesichert.");
-      }
-      saveShop();updPts();renderShop(false);
-    };
-  }
   if(!inv){
     const fz=document.createElement("div");fz.className="card";
     fz.innerHTML='<b>❄️ Streak-Freeze</b><p class="hint">Rettet deine Serie automatisch, wenn du einen Tag verpasst. Pro verpasstem Tag wird ein Freeze verbraucht, und der Tag erscheint blau. Du hast: <b>'+(shop.freezes||0)+'</b> (max. 5)</p><button class="btn" id="fzb" style="padding:10px 16px;border-radius:10px">Kaufen '+FZ_PRICE+' ⭐</button><p class="hint" id="fzh"></p>';
@@ -1094,13 +1149,18 @@ function renderShop(inv){
   };
   if(rb)rb.onclick=()=>{Object.assign(shop,{mus:"",color:null,emo:"🔥",dark:false,theme:"",font:"",title:"",fxId:"",snd:false,vib:false,pat:"",card:"",tick:"",logo:"",name:""});saveShop();applyShop();renderShop(true);render()};
   [["color","Farben"],["emo","Streak-Symbole"],["dark","Design"],["font","Schriftart"],["title","Titel"],["fx","Effekte"],["music","Hintergrundmusik"],["pat","Hintergrund-Muster"],["card","Kartenstil"],["tick","Abhak-Symbol"],["logo","Logo-Form"],["name","Name"]].forEach(([ty,title])=>{
-    const list=ITEMS.filter(i=>i.t===ty&&(!inv||shop.own.includes(i.id)));if(!list.length)return;
+    const list=ITEMS.filter(i=>i.t===ty&&(!inv||shop.own.includes(i.id)||i.def));if(!list.length)return;
     const h=document.createElement("h2");h.textContent=title;el.appendChild(h);
     const card=document.createElement("div");card.className="card";
+    const SYM=ty==="emo"||ty==="tick"||ty==="color";
+    const selKey=(inv?"i":"s")+ty;
+    let grid=null,syncSel=()=>{};const tiles=[],rows=[];
+    if(SYM){grid=document.createElement("div");grid.className="gtile";card.appendChild(grid)}
     list.forEach(i=>{
-      const own=shop.own.includes(i.id);
+      const own=shop.own.includes(i.id)||!!i.def;
       const act=ty==="color"?shop.color===i.id:ty==="emo"?shop.emo===i.v:ty==="dark"?(i.id==="dark"?shop.dark:shop.theme===i.id):ty==="title"?shop.title===i.v:ty==="fx"?(i.id==="snd"?shop.snd:shop.fxId===i.id):ty==="font"?shop.font===i.id:ty==="music"?shop.mus===i.id:ty==="pat"?shop.pat===i.id:ty==="card"?shop.card===i.id:ty==="logo"?shop.logo===i.id:ty==="tick"?shop.tick===i.v:!!shop.name;
       const row=document.createElement("div");row.className="it";
+      if(SYM){row.dataset.id=i.id;rows.push(row);if(act&&!(selKey in SEL))SEL[selKey]=i.id}
       const ic=ty==="color"?'<span class="sw3" style="background:linear-gradient(135deg,'+i.v[1]+','+i.v[0]+')"></span>':'<span style="font-size:22px;width:26px;text-align:center">'+(ty==="emo"?i.v:{dark:"🌙",name:"✏️",title:"🏅",fx:"🎉",font:"Aa",music:"🎵",pat:"▦",card:"🪟",tick:tickHTML(i.v),logo:"🔥"}[ty])+'</span>';
       row.innerHTML=ic+'<div class="n"></div>';
       const n=row.querySelector(".n");n.textContent=i.n;if(FONTS[i.id])n.style.fontFamily=FONTS[i.id];
@@ -1123,8 +1183,23 @@ function renderShop(inv){
         saveShop();applyShop();renderShop(inv);render();
       };
       if(!inv){const pb=document.createElement("button");pb.className="dim pvb";pb.textContent="👁";pb.title="Vorschau";pb.onclick=()=>previewItem(i);row.appendChild(pb)}
-      row.appendChild(b);if(inv&&own)row.appendChild(retBtn(i));card.appendChild(row);
+      row.appendChild(b);if(inv&&own&&!i.def)row.appendChild(retBtn(i));card.appendChild(row);
+      if(SYM){
+        const tl=document.createElement("button");tl.className="gt"+(act?" on":"")+(own?"":" lock");tl.dataset.id=i.id;tl.title=i.n;
+        tl.innerHTML=(ty==="color"?'<span class="sw3" style="background:linear-gradient(135deg,'+i.v[1]+','+i.v[0]+');width:30px;height:30px"></span>':'<span>'+(ty==="emo"?i.v:tickHTML(i.v))+'</span>')+'<small></small>';
+        tl.querySelector("small").textContent=own?(act?"✓":""):i.p+"⭐";
+        tl.onclick=()=>{SEL[selKey]=i.id;syncSel()};
+        grid.appendChild(tl);tiles.push(tl);
+      }
     });
+    if(SYM){
+      syncSel=()=>{
+        const id=list.some(x=>x.id===SEL[selKey])?SEL[selKey]:list[0].id;
+        rows.forEach(r=>{r.hidden=r.dataset.id!==id});
+        tiles.forEach(t=>t.classList.toggle("sel",t.dataset.id===id));
+      };
+      syncSel();
+    }
     el.appendChild(card);
   });
   if(inv&&!shop.own.length){const e=document.createElement("div");e.className="empty";e.textContent="Noch nichts gekauft. Schau im Shop vorbei!";el.appendChild(e)}
@@ -1242,18 +1317,151 @@ function renderStats(){
     row.querySelector(".prog i").style.width=r30+"%";hc.appendChild(row);
   });
 }
+const TUT=[
+ {v:"app",t:"#vt",h:"Willkommen bei Streaks 🔥",x:"Hier erledigst du jeden Tag deine Gewohnheiten und baust Serien auf („Streaks“). Dieses Tutorial zeigt dir in wenigen Schritten, wie alles funktioniert. Mit „Beenden“ kannst du jederzeit aufhören."},
+ {v:"set",t:"#sa",h:"Neuen Streak anlegen",x:"Schreibe den Namen einer Gewohnheit in das Feld und tippe auf „Hinzu“. Neue Streaks legst du hier in den Einstellungen an."},
+ {v:"app",t:"#list .chk",f:"#list",h:"Täglich abhaken",x:"Tippe auf den Kreis, wenn du eine Gewohnheit geschafft hast. Deine Serie wächst und du bekommst ⭐. Je länger die Serie, desto mehr ⭐ pro Tag.",m:"Lege zuerst einen Streak an. Dann siehst du hier den Kreis zum Abhaken."},
+ {v:"app",t:"#list .days",f:"#list",h:"Die letzten 7 Tage",x:"Grün sind erledigte Tage, blau sind mit einem Freeze gerettete Tage. Tippe auf ein Kästchen, um einen Tag nachzutragen oder wieder zu entfernen.",m:"Sobald du einen Streak hast, siehst du hier seine letzten 7 Tage."},
+ {v:"app",t:"#gift",h:"Tägliches Geschenk 🎁",x:"Hole jeden Tag Bonus-⭐ ab. Wer sieben Tage hintereinander kommt, bekommt am 7. Tag 30 ⭐."},
+ {v:"app",t:()=>{const b=document.querySelector("#list .card .sw2");return b&&b.parentElement},f:"#list",h:"Freeze, Beschreibung und mehr",x:"❄️ Freeze rettet deine Serie, wenn du einen Tag verpasst. 📝 Beschreibung gibt deinem Streak ein Motto mit eigener Schrift und Effekten. ⚠️ Kritisch versteckt private Streaks in Statistik und Erinnerung. Mit ↑ ↓ sortierst du, mit ✕ löschst du (mit Bestätigung).",m:"Diese Buttons erscheinen unter jedem Streak, sobald du einen angelegt hast."},
+ {v:"shop",t:"#shop .card",h:"Shop 🛍️",x:"Tausche deine ⭐ gegen Farben, Symbole, Schriften, Effekte, Musik und mehr. Mit 👁 probierst du jedes Item vor dem Kauf aus."},
+ {v:"inv",t:"#inv .card",h:"Inventar 🎒",x:"Hier stehen deine gekauften Items. Rüste sie aus, wechsle sie, oder gib sie per Minispiel zurück und bekomme die ⭐ wieder."},
+ {v:"ach",t:"#ach .card",h:"Badges 🏅",x:"Für Meilensteine gibt es Badges mit Stufen. Jede neue Stufe bringt dir ⭐."},
+ {v:"stats",t:"#stats .card",h:"Statistik 📊",x:"Zahlen, ein Diagramm der letzten 30 Tage, ein Aktivitäts-Kalender und deine Werte pro Gewohnheit."},
+ {v:"set",t:"#sr",h:"Tägliche Erinnerung 🔔",x:"Schalte die Erinnerung ein und wähle die Uhrzeit. In der Android-App kommt sie als Pop-up, auch wenn die App geschlossen ist."},
+ {v:"set",t:"#sd",h:"Daten sichern 💾",x:"Mit Import / Export sicherst du alles und ziehst auf ein neues Gerät um."},
+ {v:"app",t:"#vt",h:"Fertig! 🎉",x:"Viel Erfolg beim Aufbauen deiner Streaks. Das Tutorial startest du jederzeit wieder unter ⚙️ Einstellungen."}
+];
+let TI=-1;
+function endTutorial(){
+  ["tutblock","tutshade","tutcard"].forEach(id=>{const e=document.getElementById(id);if(e)e.remove()});
+  clearInterval(TT);TT=null;TS=null;
+  window.removeEventListener("resize",placeTut);window.removeEventListener("scroll",placeTut,true);
+  document.documentElement.style.overflow="";document.body.style.overflow="";
+  TI=-1;cur="app";show("app");
+}
+function startTutorial(){
+  if(document.getElementById("tutblock"))return;
+  const blk=document.createElement("div");blk.id="tutblock";blk.setAttribute("style","position:fixed;left:0;top:0;right:0;bottom:0;z-index:89");
+  const sh=document.createElement("div");sh.id="tutshade";
+  const card=document.createElement("div");card.id="tutcard";
+  card.innerHTML='<div class="tc" style="font-size:12px;color:var(--mu)"></div><b class="th" style="font-size:17px;display:block;margin:2px 0 6px"></b><div class="tx" style="font-size:14px;line-height:1.45"></div><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="sw2" id="tutp">Zurück</button><button class="btn" id="tutn" style="padding:10px 16px;border-radius:10px">Weiter</button><button class="sw2" id="tute" style="margin-left:auto">Beenden</button></div>';
+  [blk,sh,card].forEach(e=>document.body.appendChild(e));
+  /* Seite sperren, damit sich nichts verschieben lässt */
+  blk.style.touchAction="none";blk.style.overscrollBehavior="none";
+  const stop=e=>{e.preventDefault()};
+  blk.addEventListener("touchmove",stop,{passive:false});blk.addEventListener("wheel",stop,{passive:false});
+  document.documentElement.style.overflow="hidden";document.body.style.overflow="hidden";
+  window.addEventListener("resize",placeTut);window.addEventListener("scroll",placeTut,true);
+  TT=setInterval(placeTut,300);
+  document.getElementById("tutp").onclick=()=>{if(TI>0){TI--;showTut()}};
+  document.getElementById("tutn").onclick=()=>{if(TI>=TUT.length-1)endTutorial();else{TI++;showTut()}};
+  document.getElementById("tute").onclick=endTutorial;
+  TI=0;showTut();
+}
+function showTut(){
+  const s=TUT[TI];
+  cur=s.v;show(s.v);
+  const sh=document.getElementById("tutshade"),card=document.getElementById("tutcard");if(!sh||!card)return;
+  TS=s;const fnd=findTut(s),el=fnd.el,miss=fnd.miss;
+  card.querySelector(".tc").textContent="Schritt "+(TI+1)+" von "+TUT.length;
+  card.querySelector(".th").textContent=s.h;
+  card.querySelector(".tx").textContent=s.x+(miss&&s.m?" "+s.m:"");
+  document.getElementById("tutp").style.visibility=TI>0?"visible":"hidden";
+  document.getElementById("tutn").textContent=TI>=TUT.length-1?"Fertig":"Weiter";
+  if(!el){sh.style.cssText="width:0;height:0;left:50%;top:40%";card.style.top="auto";card.style.bottom="calc(8px + env(safe-area-inset-bottom,0px))";return}
+  try{el.scrollIntoView({block:"center"})}catch(e){}
+  setTimeout(placeTut,60);
+}
+let TS=null,TT=null;
+function findTut(s){
+  let el=null,miss=false;
+  try{el=typeof s.t==="function"?s.t():document.querySelector(s.t)}catch(e){}
+  if(!el&&s.f){el=document.querySelector(s.f);miss=true}
+  return{el,miss};
+}
+/* Markierung immer neu an das Element heften (bei Scrollen, Drehen und Neuaufbau der Seite) */
+function placeTut(){
+  const sh=document.getElementById("tutshade"),card=document.getElementById("tutcard");
+  if(!sh||!card||!TS)return;
+  const el=findTut(TS).el;if(!el)return;
+  const r=el.getBoundingClientRect(),vh=window.innerHeight;
+  sh.style.left=Math.max(4,r.left-6)+"px";sh.style.top=Math.max(4,r.top-6)+"px";
+  sh.style.width=Math.min(r.width+12,window.innerWidth-8)+"px";sh.style.height=Math.min(r.height+12,vh-8)+"px";
+  if(r.top+r.height/2>vh*.5){card.style.bottom="auto";card.style.top="calc(8px + env(safe-area-inset-top,0px))"}
+  else{card.style.top="auto";card.style.bottom="calc(8px + env(safe-area-inset-bottom,0px))"}
+}
+function renderSettings(){
+  const el=document.getElementById("set");
+  if(!el.firstChild){
+    el.innerHTML='<h2>🎓 Tutorial</h2><div id="stu"></div><h2>➕ Neuer Streak</h2><div id="sa"></div><h2>🔔 Erinnerung</h2><div id="sr"></div><h2>🔠 Darstellung</h2><div id="sf"></div><h2>💾 Daten</h2><div id="sd"></div><div id="st"></div><h2>⚠️ Gefahrenzone</h2><div id="sw"></div>';
+    const tc=document.createElement("div");tc.className="card";
+    tc.innerHTML='<p class="hint" style="margin:0 0 8px">Eine kurze Tour (etwa eine Minute), die dir die wichtigsten Funktionen Schritt für Schritt zeigt.</p><button class="btn" id="tutb" style="padding:10px 16px;border-radius:10px">▶ Tutorial starten</button>';
+    document.getElementById("stu").appendChild(tc);
+    tc.querySelector("#tutb").onclick=startTutorial;
+    document.getElementById("sa").appendChild(document.getElementById("in").closest(".add"));
+    document.getElementById("sr").appendChild(document.getElementById("rt").closest(".card"));
+    const dc=document.createElement("div");dc.className="card";
+    dc.innerHTML='<p class="hint" style="margin:0 0 8px">Sichere deine Gewohnheiten, Punkte und Items oder lade eine Sicherung wieder.</p>';
+    dc.appendChild(document.getElementById("iob"));
+    document.getElementById("sd").appendChild(dc);
+    const wc=document.createElement("div");wc.className="card";
+    wc.innerHTML='<p class="hint" style="margin:0 0 8px">Löscht alle Gewohnheiten, Punkte, Items und Einstellungen auf diesem Gerät. Das lässt sich nicht rückgängig machen. Sichere vorher mit Export.</p><button class="sw2" id="wpb" style="color:#d9534f">🗑️ Alle Daten löschen</button>';
+    document.getElementById("sw").appendChild(wc);
+    const wb=wc.querySelector("#wpb");let wt=null;
+    wb.onclick=()=>{
+      if(wb.dataset.ask==="1"){clearTimeout(wt);wb.dataset.ask="";wb.textContent="🗑️ Alle Daten löschen";if(window.__wipe)window.__wipe();renderSettings();flash("Alle Daten gelöscht.");return}
+      wb.dataset.ask="1";wb.textContent="Wirklich? Nochmal tippen";
+      wt=setTimeout(()=>{wb.dataset.ask="";wb.textContent="🗑️ Alle Daten löschen"},3500);
+    };
+  }
+  const sf=document.getElementById("sf");sf.innerHTML="";
+  const st=document.getElementById("st");st.innerHTML="";
+  if(shop.tm||shop.cc){
+    const th=document.createElement("h2");th.textContent="🧪 Testmodus"+(shop.cc?" (aktiv)":"");st.appendChild(th);
+    const cc=document.createElement("div");cc.className="card";
+    cc.innerHTML='<p class="hint" style="margin:0 0 8px">'+(shop.cc?'Du hast unendlich ⭐, alles kostet nichts, und du siehst Vorzeige-Gewohnheiten. Beim Deaktivieren sind deine echten Gewohnheiten und deine normale Punktzahl zurück, und die im Testmodus geholten Items verschwinden wieder.':'Unendlich ⭐ und Vorzeige-Gewohnheiten zum Ausprobieren. Deine echten Gewohnheiten werden gesichert und beim Ausschalten zurückgeholt.')+'</p><button class="sw2" id="ccb">'+(shop.cc?'Deaktivieren':'Aktivieren')+'</button>';
+    st.appendChild(cc);
+    cc.querySelector("#ccb").onclick=()=>{
+      if(shop.cc){
+        (shop.testOwn||[]).forEach(id=>{shop.own=shop.own.filter(x=>x!==id);unequip(id)});shop.testOwn=[];
+        shop.freezes=Math.max(0,(shop.freezes||0)-(shop.testFz||0));shop.testFz=0;
+        leaveDemo();shop.cc=false;save();applyShop();render();
+        flash("Testmodus aus. Deine echten Gewohnheiten sind wieder da.");
+      }else{
+        shop.cc=true;enterDemo();render();
+        flash("🧪 Testmodus: Vorzeige-Gewohnheiten geladen. Deine echten sind gesichert.");
+      }
+      saveShop();updPts();renderSettings();
+    };
+  }
+  const tabs=(title,items,cur,pick)=>{
+    const c=document.createElement("div");c.className="card";
+    c.innerHTML='<b></b><div class="tabs" style="margin:10px 0 0"></div>';c.querySelector("b").textContent=title;
+    items.forEach(([n,v])=>{const bt=document.createElement("button");bt.textContent=n;if(cur===v)bt.className="on";bt.onclick=()=>{pick(v);saveShop();applyShop();renderSettings()};c.querySelector(".tabs").appendChild(bt)});
+    sf.appendChild(c);
+  };
+  tabs("🔠 Schriftgröße",[["Klein",.88],["Normal",1],["Groß",1.15],["Sehr groß",1.3]],shop.fs||1,v=>{shop.fs=v});
+  tabs("🎵 Musik-Lautstärke",[["Aus",0],["Leise",.35],["Mittel",.7],["Laut",1]],shop.vol===undefined?.7:shop.vol,v=>{shop.vol=v});
+}
+renderSettings();
 function show(v){
-  ["app","shop","inv","stats","ach"].forEach(id=>document.getElementById(id).hidden=id!==v);
+  const VT={app:"📋 Meine Gewohnheiten",shop:"🛍️ Shop",inv:"🎒 Inventar",stats:"📊 Statistik",ach:"🏅 Badges",set:"⚙️ Einstellungen"};
+  document.getElementById("vt").textContent=VT[v]||"";
+  ["app","shop","inv","stats","ach","set"].forEach(id=>document.getElementById(id).hidden=id!==v);
   document.getElementById("shopb").textContent=v==="shop"?"←":"🛍️";
   document.getElementById("invb").textContent=v==="inv"?"←":"🎒";
   document.getElementById("stb").textContent=v==="stats"?"←":"📊";
   document.getElementById("acb").textContent=v==="ach"?"←":"🏅";
+  document.getElementById("setb").textContent=v==="set"?"←":"⚙️";
   if(v==="shop")renderShop(false);
   if(v==="inv")renderShop(true);
   if(v==="stats")renderStats();
   if(v==="ach")renderAch();
+  if(v==="set")renderSettings();
 }
 document.getElementById("shopb").onclick=()=>{cur=cur==="shop"?"app":"shop";show(cur)};
+document.getElementById("setb").onclick=()=>{cur=cur==="set"?"app":"set";show(cur)};
 document.getElementById("acb").onclick=()=>{cur=cur==="ach"?"app":"ach";show(cur)};
 document.getElementById("stb").onclick=()=>{cur=cur==="stats"?"app":"stats";show(cur)};
 document.getElementById("invb").onclick=()=>{cur=cur==="inv"?"app":"inv";show(cur)};
@@ -1272,7 +1480,7 @@ function flash(m){
     clearTimeout(t);t=setTimeout(()=>{n=0},2500);n++;
     if(n>=10){
       n=0;
-      if(!shop.tm){shop.tm=true;saveShop();flash("🧪 Testmodus freigeschaltet. Du findest ihn im Shop.");if(!document.getElementById("shop").hidden)renderShop(false)}
+      if(!shop.tm){shop.tm=true;saveShop();flash("🧪 Testmodus freigeschaltet. Du findest ihn in den Einstellungen.");if(!document.getElementById("set").hidden)renderSettings()}
       else flash("Der Testmodus ist schon freigeschaltet.");
     }
   });
@@ -1322,6 +1530,7 @@ function flash(m){
     Object.assign(rem,x.R);
     save();saveShop();saveRem();remUI();applyShop();render();
   }
+  window.__wipe=()=>apply(sane({app:"streaks",habits:[]}));
   const reset=()=>{imb.dataset.step="";imb.textContent="Importieren"};
   let DL=null;const exf=document.getElementById("exf");
   (async()=>{try{if(window.claude){DL=await claude.use("downloads");if(DL)exf.hidden=false}}catch(e){}})();
